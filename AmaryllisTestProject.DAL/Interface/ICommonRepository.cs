@@ -8,7 +8,7 @@ namespace AmaryllisTestProject.DAL.Interface
     public interface ICommonRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T> FindById(int id);
+        Task<T> FindByIdAsync(int id);
         Task CreateAsync(T item);
         void Update(T item);
         Task DeleteAsync(int id);

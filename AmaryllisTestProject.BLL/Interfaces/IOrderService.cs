@@ -1,9 +1,16 @@
-﻿using AmaryllisTestProject.DAL.Entities;
+﻿using AmaryllisTestProject.BLL.DTO;
+using AmaryllisTestProject.DAL.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AmaryllisTestProject.BLL.Interfaces
 {
     public interface IOrderService 
     {
-
+        Task<IEnumerable<OrderDTO>> GetAllAsync();
+        Task<OrderDTO> GetByIdAsync(int id);
+        Task Update(OrderDTO item);
+        Task DeleteAsync(int id);
+        Task CreateAsync(OrderDTO item);
     }
 }

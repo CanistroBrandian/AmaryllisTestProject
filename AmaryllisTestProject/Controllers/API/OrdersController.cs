@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AmaryllisTestProject.DAL.EF;
 using AmaryllisTestProject.DAL.Entities;
+using AmaryllisTestProject.WEB.Models;
+using AmaryllisTestProject.BLL.DTO;
+using AmaryllisTestProject.BLL.Interfaces;
+using AutoMapper;
 
 namespace AmaryllisTestProject.WEB.Controllers.API
 {
@@ -15,17 +19,23 @@ namespace AmaryllisTestProject.WEB.Controllers.API
     public class OrdersController : ControllerBase
     {
         private readonly EFContext _context;
+        private readonly IOrderService _orderService;
+        private readonly IMapper _mapper;
 
-        public OrdersController(EFContext context)
+        public OrdersController(EFContext context, IOrderService orderService, IMapper mapper)
         {
             _context = context;
+            _orderService = orderService;
+            _mapper = mapper;
         }
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            var listOrdersDTO = await _orderService.GetAllAsync();
+            var listOrdersView = _mapper.Map<IEnumerable<OrderDTO>, IEnumerable<OrderViewModel>>(listOrdersDTO).ToList();
+            return listOrdersView;
         }
 
         // GET: api/Orders/5
