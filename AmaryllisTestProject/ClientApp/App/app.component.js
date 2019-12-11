@@ -4,65 +4,58 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 import { Component } from '@angular/core';
-import { DataService } from './data.service';
-import { OrderViewModel } from './order';
 var AppComponent = /** @class */ (function () {
-    function AppComponent(dataService) {
-        this.dataService = dataService;
-        this.product = new OrderViewModel(); // изменяемый товар
-        this.tableMode = true; // табличный режим
+    function AppComponent() {
     }
-    AppComponent.prototype.ngOnInit = function () {
-        this.loadOrderViewModel(); // загрузка данных при старте компонента  
-    };
-    // получаем данные через сервис
-    AppComponent.prototype.loadOrderViewModel = function () {
-        var _this = this;
-        this.dataService.getOrderList()
-            .subscribe(function (data) { return _this.products = data; });
-    };
-    // сохранение данных
-    AppComponent.prototype.save = function () {
-        var _this = this;
-        if (this.product.id == null) {
-            this.dataService.createOrder(this.product)
-                .subscribe(function (data) { return _this.products.push(data); });
-        }
-        else {
-            this.dataService.updateOrder(this.product)
-                .subscribe(function (data) { return _this.loadOrderViewModel(); });
-        }
-        this.cancel();
-    };
-    AppComponent.prototype.editOrderViewModel = function (p) {
-        this.product = p;
-    };
-    AppComponent.prototype.cancel = function () {
-        this.product = new OrderViewModel();
-        this.tableMode = true;
-    };
-    AppComponent.prototype.delete = function (p) {
-        var _this = this;
-        this.dataService.deleteOrder(p.id)
-            .subscribe(function (data) { return _this.loadOrderViewModel(); });
-    };
-    AppComponent.prototype.add = function () {
-        this.cancel();
-        this.tableMode = false;
-    };
     AppComponent = __decorate([
         Component({
             selector: 'app',
-            templateUrl: './app.component.html',
-            providers: [DataService]
-        }),
-        __metadata("design:paramtypes", [DataService])
+            templateUrl: './app.component.html'
+        })
     ], AppComponent);
     return AppComponent;
 }());
 export { AppComponent };
+//    order: OrderViewModel = new OrderViewModel();   // изменяемый товар
+//    orders: OrderViewModel[];                // массив товаров
+//    tableMode: boolean = true;          // табличный режим
+//    constructor(private dataService: DataService) { }
+//    ngOnInit() {
+//        this.loadOrderViewModel();    // загрузка данных при старте компонента  
+//    }
+//    // получаем данные через сервис
+//    loadOrderViewModel() {
+//        this.dataService.getOrderList()
+//            .subscribe((data: OrderViewModel[]) => this.orders = data);
+//    }
+//    // сохранение данных
+//    save() {
+//        if (this.order.id == null) {
+//            this.dataService.createOrder(this.order)
+//                .subscribe((data: HttpResponse<OrderViewModel>) => {
+//                    console.log(data); this.orders.push(data.body);
+//                })       
+//        } else {
+//            this.dataService.updateOrder(this.order)
+//                .subscribe(data => this.loadOrderViewModel());
+//        }
+//        this.cancel();
+//    }
+//    editOrderViewModel(p: OrderViewModel) {
+//        this.order = p;
+//    }
+//    cancel() {
+//        this.order = new OrderViewModel();
+//        this.tableMode = true;
+//    }
+//    delete(p: OrderViewModel) {
+//        this.dataService.deleteOrder(p.id)
+//            .subscribe(data => this.loadOrderViewModel());
+//    }
+//    add() {
+//        this.cancel();
+//        this.tableMode = false;
+//    }
+//}
 //# sourceMappingURL=app.component.js.map

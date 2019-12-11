@@ -13,18 +13,21 @@ var DataService = /** @class */ (function () {
     function DataService(http) {
         this.http = http;
         this.orderUrl = "/api/orders";
-        this.userUrl = "/api/angular/user";
-        this.carUrl = "/api/angular/car";
+        this.userUrl = "/api/users";
+        this.carUrl = "/api/cars";
     }
     //Order
     DataService.prototype.getOrderList = function () {
         return this.http.get(this.orderUrl);
     };
+    DataService.prototype.getOrder = function (id) {
+        return this.http.get(this.orderUrl + '/' + id);
+    };
     DataService.prototype.createOrder = function (order) {
-        return this.http.post(this.orderUrl, order);
+        return this.http.post(this.orderUrl, order, { observe: 'response' });
     };
     DataService.prototype.updateOrder = function (order) {
-        return this.http.put(this.orderUrl + '/' + order.id, order);
+        return this.http.put(this.orderUrl + '/' + order.id, order, { observe: 'response', responseType: 'text' });
     };
     DataService.prototype.deleteOrder = function (id) {
         return this.http.delete(this.orderUrl + '/' + id);

@@ -13,10 +13,20 @@
     <None Remove="ClientApp\App\app.module.ts" />
     <None Remove="ClientApp\App\car.ts" />
     <None Remove="ClientApp\App\data.service.ts" />
+    <None Remove="ClientApp\App\not-found.component.ts" />
+    <None Remove="ClientApp\App\order-create.component.ts" />
+    <None Remove="ClientApp\App\order-detail.component.ts" />
+    <None Remove="ClientApp\App\order-edit.component.ts" />
+    <None Remove="ClientApp\App\order-form.component.html" />
+    <None Remove="ClientApp\App\order-form.component.ts" />
     <None Remove="ClientApp\App\order.ts" />
     <None Remove="ClientApp\App\user.ts" />
     <None Remove="ClientApp\main.ts" />
     <None Remove="ClientApp\polyfills.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\App\order-list.component.ts" />
   </ItemGroup>
 
 
@@ -40,6 +50,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\App\app.component.ts" />
     <TypeScriptCompile Include="ClientApp\App\app.module.ts" />
+    <TypeScriptCompile Include="ClientApp\App\order-form.component.html" />
     <TypeScriptCompile Include="ClientApp\main.ts" />
     <TypeScriptCompile Include="ClientApp\polyfills.ts" />
   </ItemGroup>

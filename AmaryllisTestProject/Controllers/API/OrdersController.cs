@@ -37,6 +37,15 @@ namespace AmaryllisTestProject.WEB.Controllers.API
             var listOrdersView = _mapper.Map<IEnumerable<OrderDTO>, IEnumerable<OrderViewModel>>(listOrdersDTO).ToList();
             return listOrdersView;
         }
+        [Route("api/[controller]/filter")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetOrdersFilter(OrderViewModel item)
+        {
+            var orderDTO = _mapper.Map<OrderViewModel, OrderDTO>(item);
+            var filterList = await _orderService.Filter(orderDTO);
+            var view = _mapper.Map<IEnumerable<OrderDTO>, IEnumerable<OrderViewModel>>(filterList).ToList();
+            return view;
+        }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
@@ -84,10 +93,10 @@ namespace AmaryllisTestProject.WEB.Controllers.API
 
         // POST: api/Orders
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder(OrderViewModel order)
         {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
+           var orderDTO = _mapper.Map<OrderViewModel, OrderDTO>(order);
+            await _orderService.CreateAsync(orderDTO);
 
             return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }

@@ -1,0 +1,11 @@
+﻿<div *ngIf="loaded">
+    <h2>Заказ {{order.id}}</h2>
+    <div>
+        <p><b>Машина:</b> {{order.carId}}</p>
+        <p><b>Пользователь:</b> {{order.userId}}</p>
+        <p><b>Дата начала контракта:</b> {{order.startContractDateTime}}</p>
+        <p><b>Дата Окончания контракта:</b> {{order.finishedContractDateTime}}</p>
+        <p><b>Комментарий: </b> {{order.comment}}</p>
+        <p><a routerLink="/" class="nav-link">К списку заказов</a></p>
+    </div>
+</div>

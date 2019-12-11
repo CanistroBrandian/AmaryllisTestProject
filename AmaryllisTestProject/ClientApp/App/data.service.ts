@@ -8,8 +8,8 @@ import { UserViewModel } from './user';
 export class DataService {
 
     private orderUrl = "/api/orders";
-    private userUrl = "/api/angular/user";
-    private carUrl = "/api/angular/car";
+    private userUrl = "/api/users";
+    private carUrl = "/api/cars";
 
     constructor(private http: HttpClient) {
     }
@@ -18,12 +18,17 @@ export class DataService {
         return this.http.get(this.orderUrl);
     }
 
+    getOrder(id: number) {
+        return this.http.get(this.orderUrl + '/' + id);
+    }
+
     createOrder(order: OrderViewModel) {
-        return this.http.post(this.orderUrl, order);
+        return this.http.post(this.orderUrl, order, { observe: 'response' });
     }
     updateOrder(order: OrderViewModel) {
 
-        return this.http.put(this.orderUrl + '/' + order.id, order);
+        return this.http.put(this.orderUrl + '/' + order.id, order,
+            { observe: 'response', responseType: 'text' });
     }
     deleteOrder(id: number) {
         return this.http.delete(this.orderUrl + '/' + id);

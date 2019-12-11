@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AmaryllisTestProject.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,5 +13,7 @@ namespace AmaryllisTestProject.BLL.DTO
         public DateTime StartContractDateTime { get; set; }
         public DateTime FinishedContractDateTime { get; set; }
         public string Comment { get; set; }
+        public Car Car { get; set; }
+        public User User { get; set; }
     }
 }

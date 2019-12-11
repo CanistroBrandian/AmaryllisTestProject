@@ -12,5 +12,6 @@ namespace AmaryllisTestProject.BLL.Interfaces
         Task Update(OrderDTO item);
         Task DeleteAsync(int id);
         Task CreateAsync(OrderDTO item);
+        Task<IEnumerable<OrderDTO>> Filter(OrderDTO item);
     }
 }

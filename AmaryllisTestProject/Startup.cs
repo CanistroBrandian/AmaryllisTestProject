@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.IO;
 
 namespace AmaryllisTestProject
 {
@@ -90,11 +91,19 @@ namespace AmaryllisTestProject
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvc(routes =>
+            app.UseMvc(
+            //    routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //}
+            );
+
+            app.Run(async (context) =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                context.Response.ContentType = "text/html";
+                await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
             });
         }
 
