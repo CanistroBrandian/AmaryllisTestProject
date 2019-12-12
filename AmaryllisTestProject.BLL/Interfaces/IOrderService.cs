@@ -1,5 +1,6 @@
 ﻿using AmaryllisTestProject.BLL.DTO;
 using AmaryllisTestProject.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,6 +13,6 @@ namespace AmaryllisTestProject.BLL.Interfaces
         Task Update(OrderDTO item);
         Task DeleteAsync(int id);
         Task CreateAsync(OrderDTO item);
-        Task<IEnumerable<OrderDTO>> Filter(OrderDTO item);
+        Task<IEnumerable<OrderDTO>> FilterbyStartData(string item);
     }
 }

@@ -1,9 +1,9 @@
 ﻿export class UserViewModel {
     constructor(
         public id?: number,
-        public FirstName?: string,
-        public LastName?: number,
-        public DateOfBirth?: Date,
-        public DriveNumber?: string,
+        public firstName?: string,
+        public lastName?: string,
+        public dateOfBirth?: Date,
+        public driveNumber?: string,
     ) { }
 }

@@ -3,7 +3,14 @@
 </div>
 
 <div>
-    <input [(ngModel)]="userName" (ngModelChange)="filter($event)" type="text" />
+    <input [(ngModel)]="nameUser" (ngModelChange)="filter($event)" type="text" />
+</div>
+
+<div>
+    <div *ngFor="let item of sortedArray">
+         {{item.car.brand}} {{item.car.class}}
+
+    </div>
 </div>
 <table class="table table-striped">
     <thead>
@@ -19,10 +26,10 @@
     <tbody>
         <tr *ngFor="let o of orders">
             <td>
-                <p> {{o.car.class}}</p>
+                <p> {{o.car.brand}} {{o.car.class}}</p>
             </td>
             <td>
-                <p> {{o.userId}}</p>
+                <p> {{o.user.firstName}} {{o.user.lastName}}</p>
             </td>
             <td>
                 <p> {{o.startContractDateTime}}</p>

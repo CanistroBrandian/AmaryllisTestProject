@@ -13,6 +13,7 @@ var OrderListComponent = /** @class */ (function () {
     function OrderListComponent(dataService) {
         this.dataService = dataService;
         this.nameUser = null;
+        this.sortOn = false;
     }
     OrderListComponent.prototype.filter = function (newValue) {
         if (newValue != "") {
@@ -22,6 +23,19 @@ var OrderListComponent = /** @class */ (function () {
         else
             this.orders = this.fullOrdersList;
     };
+    OrderListComponent.prototype.sortAds = function (sort) {
+        if (sort)
+            this.orders.sort;
+        else
+            this.orders.reverse;
+    };
+    Object.defineProperty(OrderListComponent.prototype, "sortedArray", {
+        get: function () {
+            return this.orders.reverse();
+        },
+        enumerable: true,
+        configurable: true
+    });
     OrderListComponent.prototype.ngOnInit = function () {
         this.load();
     };

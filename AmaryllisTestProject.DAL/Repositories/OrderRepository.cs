@@ -15,7 +15,12 @@ namespace AmaryllisTestProject.DAL.Repositories
 
         public override async Task<IEnumerable<Order>> GetAllAsync()
         {
-            return await _uow.Context.Set<Order>().Include(e => e.Car).AsNoTracking().ToListAsync();
+            return await _uow.Context.Set<Order>().Include(e => e.Car).Include(u=> u.User).AsNoTracking().ToListAsync();
+        }
+
+        public override async Task<Order> FindByIdAsync(int id)
+        {
+            return await _uow.Context.Set<Order>().Include(e => e.Car).Include(u => u.User).AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
     }
 }

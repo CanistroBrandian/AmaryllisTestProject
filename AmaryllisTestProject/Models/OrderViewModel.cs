@@ -15,5 +15,6 @@ namespace AmaryllisTestProject.WEB.Models
         public DateTime FinishedContractDateTime { get; set; }
         public string Comment { get; set; }
         public CarDTO Car { get; set; }
+        public UserDTO User { get; set; }
     }
 }

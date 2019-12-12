@@ -1,10 +1,10 @@
 var UserViewModel = /** @class */ (function () {
-    function UserViewModel(id, FirstName, LastName, DateOfBirth, DriveNumber) {
+    function UserViewModel(id, firstName, lastName, dateOfBirth, driveNumber) {
         this.id = id;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.DateOfBirth = DateOfBirth;
-        this.DriveNumber = DriveNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.driveNumber = driveNumber;
     }
     return UserViewModel;
 }());

@@ -9,7 +9,8 @@ export class OrderListComponent implements OnInit {
 
     orders: OrderViewModel[];
     fullOrdersList: OrderViewModel[];
-    nameUser: number = null;
+    nameUser: string = null;
+    sortOn: boolean = false;
     constructor(private dataService: DataService) { }
 
     filter(newValue: any) {
@@ -20,7 +21,15 @@ export class OrderListComponent implements OnInit {
         else this.orders = this.fullOrdersList;
     }
 
+    sortAds(sort: boolean) {
+        if (sort)
+            this.orders.sort;
+        else this.orders.reverse;
+    }
 
+    public get sortedArray(): OrderViewModel[] {
+        return this.orders.reverse();
+    }
 
     ngOnInit() {
         this.load();

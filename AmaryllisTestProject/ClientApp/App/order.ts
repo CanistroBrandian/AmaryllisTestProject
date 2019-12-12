@@ -1,4 +1,5 @@
 ﻿import { CarViewModel } from "./car";
+import { UserViewModel } from "./user";
 
 export class OrderViewModel {
     constructor(
@@ -9,5 +10,6 @@ export class OrderViewModel {
         public finishedContractDateTime?: Date,
         public comment?: string,
         public Car?: CarViewModel,
+        public User?: UserViewModel,
         ) { }
 }

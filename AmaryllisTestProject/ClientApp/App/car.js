@@ -1,11 +1,11 @@
 var CarViewModel = /** @class */ (function () {
-    function CarViewModel(id, brand, Model, Class, RegistrationNumber, YearOfIssue) {
+    function CarViewModel(id, brand, model, Class, registrationNumber, yearOfIssue) {
         this.id = id;
         this.brand = brand;
-        this.Model = Model;
+        this.model = model;
         this.Class = Class;
-        this.RegistrationNumber = RegistrationNumber;
-        this.YearOfIssue = YearOfIssue;
+        this.registrationNumber = registrationNumber;
+        this.yearOfIssue = yearOfIssue;
     }
     return CarViewModel;
 }());
