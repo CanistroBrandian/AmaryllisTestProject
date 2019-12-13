@@ -1,6 +1,8 @@
 ﻿<div *ngIf="loaded">
     <h2>Изменение данных о заказе</h2>
-    <order-form [(order)]="order"></order-form>
+    <order-form [(order)]="order" 
+                [cars]="cars"
+                [users]="users"></order-form>
     <div class="form-group">
         <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
     </div>

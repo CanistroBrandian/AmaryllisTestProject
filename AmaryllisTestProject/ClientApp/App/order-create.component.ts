@@ -10,10 +10,20 @@ import {UserViewModel} from "./user";
 })
 export class OrderCreateComponent {
 
-    order: OrderViewModel = new OrderViewModel();    // добавляемый объект
+    order: OrderViewModel = new OrderViewModel();
+    cars: CarViewModel[];
+    users: UserViewModel[]; // добавляемый объект
+
     constructor(private dataService: DataService, private router: Router) {
-        this.order.car = new CarViewModel();
-        this.order.user = new UserViewModel();
+    }
+
+    ngOnInit() {
+        this.dataService.getCarList().subscribe((data: CarViewModel[]) => {
+            this.cars = data;
+        });
+        this.dataService.getUserList().subscribe((data: UserViewModel[]) => {
+            this.users = data;
+        });
     }
 
     save() {

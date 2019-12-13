@@ -3,12 +3,6 @@
     <input [(ngModel)]="searchTerm" (ngModelChange)="filter($event)" type="text" />
 </div>
 
-<!--<div>
-    <div *ngFor="let item of sortedArray">
-         {{item.car.brand}} {{item.car.class}}
-
-    </div>
-</div>-->
 <table class="table table-striped">
     <thead>
         <tr>
@@ -21,30 +15,31 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let o of orders">
+        <tr *ngFor="let order of orders">
             <td>
-                <p> {{o.car.brand}} {{o.car.Class}}</p>
+                <p *ngIf="getCarById(order.carId); let orderCar"> {{orderCar.brand}} {{orderCar.Class}}</p>
             </td>
             <td>
-                <p> {{o.user.firstName}} {{o.user.lastName}}</p>
+                <p *ngIf="getUserById(order.userId); let orderUser">
+                    {{orderUser.firstName}} {{orderUser.lastName}}
+                </p>
             </td>
             <td>
-                <p> {{o.startContractDateTime}}</p>
+                <p> {{order.startContractDateTime | date : "shortDate"}}</p>
             </td>
             <td>
-                <p> {{o.finishedContractDateTime}}</p>
+                <p> {{order.finishedContractDateTime | date : "shortDate"}}</p>
             </td>
             <td>
-                <p> {{o.comment}}</p>
+                <p> {{order.comment}}</p>
             </td>
             <td>
-                <a [routerLink]="['edit', o.id]" class="btn btn-sm btn-primary">Изменить</a>
-                <button (click)="delete(o.id)" class="btn btn-sm btn-danger">Удалить</button>
+                <a [routerLink]="['edit', order.id]" class="btn btn-sm btn-primary">Изменить</a>
+                <button (click)="delete(order.id)" class="btn btn-sm btn-danger">Удалить</button>
             </td>
         </tr>
     </tbody>
 </table>
-
 <div>
     <a class="btn btn-default" routerLink="/create">Добавить</a>
 </div>

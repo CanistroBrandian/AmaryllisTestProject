@@ -1,10 +1,14 @@
 ﻿<div class="form-group">
     <label>Машина</label>
-    <input type="text" [(ngModel)]="order.car.brand" class="form-control" />
+    <select [(ngModel)]="order.carId" class="form-control">
+        <option *ngFor="let car of cars" value={{car.id}}>{{car.brand}} {{car.model}}</option>
+    </select>
 </div>
 <div class="form-group">
     <label>Пользователь</label>
-    <input type="text" [(ngModel)]="order.user.firstName" class="form-control" />
+    <select [(ngModel)]="order.userId" class="form-control">
+        <option *ngFor="let user of users" value={{user.id}}>{{user.firstName}} {{user.lastName}}</option>
+    </select>
 </div>
 <div class="form-group">
     <label>Дата начала контракта</label>

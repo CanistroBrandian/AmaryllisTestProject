@@ -8,8 +8,6 @@ export class OrderViewModel {
         public userId?: number,
         public startContractDateTime?:  Date,
         public finishedContractDateTime?: Date,
-        public comment?: string,
-        public car?: CarViewModel,
-        public user?: UserViewModel,
+        public comment?: string
         ) { }
 }
