@@ -11,9 +11,9 @@ namespace AmaryllisTestProject.DAL.Interface
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null);
         Task<T> FindByIdAsync(int id);
         Task CreateAsync(T item);
-        void Update(T item);
+        Task UpdateAsync(T item);
         Task DeleteAsync(int id);
-        Task<IEnumerable<T>> FindList(Func<T, bool> predicate);
+        Task<IEnumerable<T>> FindListAsync(Expression<Func<T, bool>> predicate);
 
     }
 }

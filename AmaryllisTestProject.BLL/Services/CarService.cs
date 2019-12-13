@@ -63,7 +63,7 @@ namespace AmaryllisTestProject.BLL.Services
                 sourceCar.RegistrationNumber = item.RegistrationNumber;
                 sourceCar.YearOfIssue = item.YearOfIssue;
 
-                _carRepository.Update(sourceCar);
+                await _carRepository.UpdateAsync(sourceCar);
             }
             else throw new Exception("Такой записи нет");
         }

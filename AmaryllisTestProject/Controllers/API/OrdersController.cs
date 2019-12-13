@@ -27,20 +27,20 @@ namespace AmaryllisTestProject.WEB.Controllers.API
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetOrders()
+        public async Task<ActionResult<IEnumerable<OrderModel>>> GetOrders()
         {
             var listOrdersDTO = await _orderService.GetAllAsync();
-            var listOrdersView = _mapper.Map<IEnumerable<OrderDTO>, IEnumerable<OrderViewModel>>(listOrdersDTO).ToList();
+            var listOrdersView = _mapper.Map<IEnumerable<OrderDTO>, IEnumerable<OrderModel>>(listOrdersDTO).ToList();
             return listOrdersView;
         }
        
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OrderViewModel>> GetOrder(int id)
+        public async Task<ActionResult<OrderModel>> GetOrder(int id)
         {
             var orderDTO = await _orderService.GetByIdAsync(id);
-           var orderView = _mapper.Map<OrderDTO, OrderViewModel>(orderDTO);
+           var orderView = _mapper.Map<OrderDTO, OrderModel>(orderDTO);
             if (orderView == null)
             {
                 return NotFound();
@@ -51,7 +51,7 @@ namespace AmaryllisTestProject.WEB.Controllers.API
 
         // PUT: api/Orders/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, OrderViewModel order)
+        public async Task<IActionResult> PutOrder(int id, OrderModel order)
         {
             if (id != order.Id)
             {
@@ -62,8 +62,8 @@ namespace AmaryllisTestProject.WEB.Controllers.API
             {
                 try
                 {
-                    var orderDTO = _mapper.Map<OrderViewModel, OrderDTO>(order);                  
-                    await _orderService.Update(orderDTO);
+                    var orderDTO = _mapper.Map<OrderModel, OrderDTO>(order);                  
+                    await _orderService.UpdateAsync(orderDTO);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -76,9 +76,9 @@ namespace AmaryllisTestProject.WEB.Controllers.API
 
         // POST: api/Orders
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(OrderViewModel order)
+        public async Task<ActionResult<Order>> PostOrder(OrderModel order)
         {
-           var orderDTO = _mapper.Map<OrderViewModel, OrderDTO>(order);
+           var orderDTO = _mapper.Map<OrderModel, OrderDTO>(order);
             await _orderService.CreateAsync(orderDTO);
 
             return CreatedAtAction("GetOrder", new { id = order.Id }, order);
@@ -86,7 +86,7 @@ namespace AmaryllisTestProject.WEB.Controllers.API
 
         // DELETE: api/Orders/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<OrderViewModel>> DeleteOrder(int id)
+        public async Task<ActionResult<OrderModel>> DeleteOrder(int id)
         {
             var order = await _orderService.GetByIdAsync(id);
             if (order == null)
@@ -95,16 +95,16 @@ namespace AmaryllisTestProject.WEB.Controllers.API
             }
 
            await _orderService.DeleteAsync(id);
-            var orderView =_mapper.Map<OrderDTO, OrderViewModel>(order);
+            var orderView =_mapper.Map<OrderDTO, OrderModel>(order);
             return orderView;
         }
 
 
         [HttpGet("filter")]
-        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetFilteredOrders(DateTime? startDate = null, DateTime? finishedDate = null, string userFirstName = null, string userLastName = null)
+        public async Task<ActionResult<IEnumerable<OrderModel>>> GetFilteredOrders(DateTime? startDate = null, DateTime? finishedDate = null, string userFirstName = null, string userLastName = null)
         {
             var orderDTO = await _orderService.GetAllAsync(startDate, finishedDate, userFirstName, userLastName);
-            var orderView = _mapper.Map<IEnumerable<OrderDTO>, IEnumerable<OrderViewModel>>(orderDTO).ToList();
+            var orderView = _mapper.Map<IEnumerable<OrderDTO>, IEnumerable<OrderModel>>(orderDTO).ToList();
             if (orderView == null)
             {
                 return NotFound();

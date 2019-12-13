@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AmaryllisTestProject.WEB.Models
 {
-    public class OrderViewModel
+    public class OrderModel
     {
         public int Id { get; set; }
         public int CarId { get; set; }
@@ -14,7 +14,5 @@ namespace AmaryllisTestProject.WEB.Models
         public DateTime StartContractDateTime { get; set; }
         public DateTime FinishedContractDateTime { get; set; }
         public string Comment { get; set; }
-        public CarDTO Car { get; set; }
-        public UserDTO User { get; set; }
     }
 }

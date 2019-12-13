@@ -22,7 +22,7 @@ namespace AmaryllisTestProject.DAL.Repositories
         {
             if (item == null) throw new Exception("Значения модели не описаны");
             await _uow.Context.Set<T>().AddAsync(item);
-            _uow.Commit();
+            await _uow.CommitAsync();
         }
 
         public virtual async Task DeleteAsync(int id)
@@ -30,7 +30,7 @@ namespace AmaryllisTestProject.DAL.Repositories
             var dbEntry = await _uow.Context.Set<T>().FindAsync(id);
             if (dbEntry == null) throw new Exception("Значения модели не описаны");
             _uow.Context.Remove(dbEntry);
-            _uow.Commit();
+            await _uow.CommitAsync();
         }
 
         public virtual async Task<T> FindByIdAsync(int id)
@@ -52,16 +52,16 @@ namespace AmaryllisTestProject.DAL.Repositories
                     .ToListAsync();
         }
 
-        public virtual void Update(T item)
+        public virtual async Task UpdateAsync(T item)
         {
-            var exist = _uow.Context.Set<T>().Find(item.Id);
+            var exist = await _uow.Context.Set<T>().FindAsync(item.Id);
             _uow.Context.Entry(exist).CurrentValues.SetValues(item);
-            _uow.Commit();
+            await _uow.CommitAsync();
         }
 
-        public async Task<IEnumerable<T>> FindList(Func<T, bool> predicate)
+        public async Task<IEnumerable<T>> FindListAsync(Expression<Func<T, bool>> predicate)
         {
-            return _uow.Context.Set<T>().AsNoTracking().Where(predicate).AsEnumerable<T>();
+            return await _uow.Context.Set<T>().AsNoTracking().Where(predicate).ToListAsync();
         }
 
     }

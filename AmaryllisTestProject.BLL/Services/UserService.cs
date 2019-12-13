@@ -21,12 +21,13 @@ namespace AmaryllisTestProject.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task CreateAsync(UserDTO item)
+        public async Task<UserDTO> CreateAsync(UserDTO item)
         {
             if (item != null)
             {
                 var user = _mapper.Map<UserDTO, User>(item);
                 await _userRepository.CreateAsync(user);
+                return _mapper.Map<User, UserDTO>(user);
             }
             else throw new Exception("Данные не заполнены");
         }
@@ -50,7 +51,7 @@ namespace AmaryllisTestProject.BLL.Services
             return userDTO;
         }
 
-        public async Task Update(UserDTO item)
+        public async Task UpdateAsync(UserDTO item)
         {
             var sourceUser = await _userRepository.FindByIdAsync(item.Id);
 
@@ -60,7 +61,7 @@ namespace AmaryllisTestProject.BLL.Services
                 sourceUser.FirstName = item.FirstName;
                 sourceUser.DateOfBirth = item.DateOfBirth;
                 sourceUser.DriveNumber = item.DriveNumber;
-                _userRepository.Update(sourceUser);
+                await _userRepository.UpdateAsync(sourceUser);
             }
             else throw new Exception("Такой записи нет");
         }

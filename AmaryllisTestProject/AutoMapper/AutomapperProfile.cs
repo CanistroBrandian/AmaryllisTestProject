@@ -12,9 +12,9 @@ namespace AmaryllisTestProject.AutoMapper
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<Car, CarDTO>().ReverseMap();
-            CreateMap<CarDTO, CarViewModel>().ReverseMap();
-            CreateMap<OrderDTO, OrderViewModel>().ReverseMap();
-            CreateMap<UserDTO, UserViewModel>().ReverseMap();
+            CreateMap<CarDTO, CarModel>().ReverseMap();
+            CreateMap<OrderDTO, OrderModel>().ReverseMap();
+            CreateMap<UserDTO, UserModel>().ReverseMap();
         }
 
     }

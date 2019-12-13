@@ -10,7 +10,7 @@ namespace AmaryllisTestProject.BLL.Interfaces
     {
         Task<IEnumerable<OrderDTO>> GetAllAsync();
         Task<OrderDTO> GetByIdAsync(int id);
-        Task Update(OrderDTO item);
+        Task UpdateAsync(OrderDTO item);
         Task DeleteAsync(int id);
         Task CreateAsync(OrderDTO item);
         Task<IEnumerable<OrderDTO>> GetAllAsync(DateTime? startDate = null, DateTime? finishedDate = null, string userFirstName = null, string userLastName = null);

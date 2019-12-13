@@ -31,10 +31,10 @@ namespace AmaryllisTestProject.WEB.Controllers.API
 
         // GET: api/Cars
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CarViewModel>>> GetCars()
+        public async Task<ActionResult<IEnumerable<CarModel>>> GetCars()
         {
             var listCarsDTO = await _carService.GetAllAsync();
-            var listCarsView = _mapper.Map<IEnumerable<CarDTO>, IEnumerable<CarViewModel>>(listCarsDTO);
+            var listCarsView = _mapper.Map<IEnumerable<CarDTO>, IEnumerable<CarModel>>(listCarsDTO);
             return listCarsView.ToList();
         }
 

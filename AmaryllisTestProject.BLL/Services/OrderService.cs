@@ -5,7 +5,6 @@ using AmaryllisTestProject.DAL.Interface;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AmaryllisTestProject.BLL.Services
@@ -50,7 +49,7 @@ namespace AmaryllisTestProject.BLL.Services
             return orderDTO;
         }
 
-        public async Task Update(OrderDTO item)
+        public async Task UpdateAsync(OrderDTO item)
         {
             var sourceOrder = await _orderRepository.FindByIdAsync(item.Id);
 
@@ -62,7 +61,7 @@ namespace AmaryllisTestProject.BLL.Services
                 sourceOrder.StartContractDateTime = item.StartContractDateTime;
                 sourceOrder.FinishedContractDateTime = item.FinishedContractDateTime;
 
-                _orderRepository.Update(sourceOrder);
+               await _orderRepository.UpdateAsync(sourceOrder);
             }
             else throw new Exception("Такой записи нет");
         }

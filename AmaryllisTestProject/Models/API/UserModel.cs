@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AmaryllisTestProject.WEB.Models
 {
-    public class UserViewModel
+    public class UserModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

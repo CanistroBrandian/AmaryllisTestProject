@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AmaryllisTestProject.WEB.Models
 {
-    public class CarViewModel
+    public class CarModel
     {
         public int Id { get; set; }
         public string Brand { get; set; }

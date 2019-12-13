@@ -3,6 +3,7 @@ using AmaryllisTestProject.DAL.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AmaryllisTestProject.DAL.Concrate
 {
@@ -18,6 +19,11 @@ namespace AmaryllisTestProject.DAL.Concrate
         public void Commit()
         {
             Context.SaveChanges();
+        }
+
+        public async Task CommitAsync()
+        {
+            await Context.SaveChangesAsync();
         }
 
         private bool disposed = false;

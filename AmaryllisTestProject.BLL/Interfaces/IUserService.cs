@@ -11,8 +11,8 @@ namespace AmaryllisTestProject.BLL.Interfaces
     {
         Task<IEnumerable<UserDTO>> GetAllAsync();
         Task<UserDTO> GetByIdAsync(int id);
-        Task Update(UserDTO item);
+        Task UpdateAsync(UserDTO item);
         Task DeleteAsync(int id);
-        Task CreateAsync(UserDTO item);
+        Task<UserDTO> CreateAsync(UserDTO item);
     }
 }
