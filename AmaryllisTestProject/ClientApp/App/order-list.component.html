@@ -1,0 +1,50 @@
+﻿
+<div>
+    <input [(ngModel)]="searchTerm" (ngModelChange)="filter($event)" type="text" />
+</div>
+
+<!--<div>
+    <div *ngFor="let item of sortedArray">
+         {{item.car.brand}} {{item.car.class}}
+
+    </div>
+</div>-->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Машина</td>
+            <td>Пользователь</td>
+            <td>Дата начала контракта</td>
+            <td>Дата Окончания контракта</td>
+            <td>Комментарий</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let o of orders">
+            <td>
+                <p> {{o.car.brand}} {{o.car.Class}}</p>
+            </td>
+            <td>
+                <p> {{o.user.firstName}} {{o.user.lastName}}</p>
+            </td>
+            <td>
+                <p> {{o.startContractDateTime}}</p>
+            </td>
+            <td>
+                <p> {{o.finishedContractDateTime}}</p>
+            </td>
+            <td>
+                <p> {{o.comment}}</p>
+            </td>
+            <td>
+                <a [routerLink]="['edit', o.id]" class="btn btn-sm btn-primary">Изменить</a>
+                <button (click)="delete(o.id)" class="btn btn-sm btn-danger">Удалить</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div>
+    <a class="btn btn-default" routerLink="/create">Добавить</a>
+</div>

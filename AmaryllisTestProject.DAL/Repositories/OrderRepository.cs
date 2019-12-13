@@ -1,8 +1,9 @@
 ﻿using AmaryllisTestProject.DAL.Entities;
 using AmaryllisTestProject.DAL.Interface;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AmaryllisTestProject.DAL.Repositories
 {
@@ -10,6 +11,16 @@ namespace AmaryllisTestProject.DAL.Repositories
     {
         public OrderRepository(IUnitOfWork uow) : base(uow)
         {
+        }
+
+        public override async Task<IEnumerable<Order>> GetAllAsync()
+        {
+            return await _uow.Context.Set<Order>().Include(e => e.Car).Include(u=> u.User).AsNoTracking().ToListAsync();
+        }
+
+        public override async Task<Order> FindByIdAsync(int id)
+        {
+            return await _uow.Context.Set<Order>().Include(e => e.Car).Include(u => u.User).AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
     }
 }

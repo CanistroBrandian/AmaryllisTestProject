@@ -1,12 +1,14 @@
-﻿using System;
+﻿using AmaryllisTestProject.BLL.DTO;
+using AmaryllisTestProject.BLL.Interfaces;
+using AmaryllisTestProject.DAL.Entities;
+using AmaryllisTestProject.WEB.Models;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AmaryllisTestProject.DAL.EF;
-using AmaryllisTestProject.DAL.Entities;
 
 namespace AmaryllisTestProject.WEB.Controllers.API
 {
@@ -14,93 +16,102 @@ namespace AmaryllisTestProject.WEB.Controllers.API
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly EFContext _context;
+        private readonly IOrderService _orderService;
+        private readonly IMapper _mapper;
 
-        public OrdersController(EFContext context)
+        public OrdersController(IOrderService orderService, IMapper mapper)
         {
-            _context = context;
+            _orderService = orderService;
+            _mapper = mapper;
         }
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            var listOrdersDTO = await _orderService.GetAllAsync();
+            var listOrdersView = _mapper.Map<IEnumerable<OrderDTO>, IEnumerable<OrderViewModel>>(listOrdersDTO).ToList();
+            return listOrdersView;
         }
+       
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public async Task<ActionResult<OrderViewModel>> GetOrder(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
-
-            if (order == null)
+            var orderDTO = await _orderService.GetByIdAsync(id);
+           var orderView = _mapper.Map<OrderDTO, OrderViewModel>(orderDTO);
+            if (orderView == null)
             {
                 return NotFound();
             }
 
-            return order;
+            return orderView;
         }
 
         // PUT: api/Orders/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        public async Task<IActionResult> PutOrder(int id, OrderViewModel order)
         {
             if (id != order.Id)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(order).State = EntityState.Modified;
-
-            try
+            if (ModelState.IsValid)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
+                try
                 {
-                    return NotFound();
+                    var orderDTO = _mapper.Map<OrderViewModel, OrderDTO>(order);                  
+                    await _orderService.Update(orderDTO);
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
-                }
-            }
 
+                }
+
+            }
             return NoContent();
         }
 
         // POST: api/Orders
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder(OrderViewModel order)
         {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
+           var orderDTO = _mapper.Map<OrderViewModel, OrderDTO>(order);
+            await _orderService.CreateAsync(orderDTO);
 
             return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }
 
         // DELETE: api/Orders/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Order>> DeleteOrder(int id)
+        public async Task<ActionResult<OrderViewModel>> DeleteOrder(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _orderService.GetByIdAsync(id);
             if (order == null)
             {
                 return NotFound();
             }
 
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return order;
+           await _orderService.DeleteAsync(id);
+            var orderView =_mapper.Map<OrderDTO, OrderViewModel>(order);
+            return orderView;
         }
 
-        private bool OrderExists(int id)
+
+/*        [HttpGet("filter/{startContractDateTime}")]
+        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetOrderByFilterStartContract(string startContractDateTime)
         {
-            return _context.Orders.Any(e => e.Id == id);
-        }
+            var orderDTO = await _orderService.FilterbyStartData(startContractDateTime);
+            var orderView = _mapper.Map<IEnumerable<OrderDTO>, IEnumerable<OrderViewModel>>(orderDTO).ToList();
+            if (orderView == null)
+            {
+                return NotFound();
+            }
+
+            return orderView;
+        }*/
+
     }
 }

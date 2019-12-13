@@ -9,10 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ClientApp\**" />
-    <Content Remove="ClientApp\**" />
-    <EmbeddedResource Remove="ClientApp\**" />
-    <None Remove="ClientApp\**" />
+    <None Remove="ClientApp\App\app.component.ts" />
+    <None Remove="ClientApp\App\app.module.ts" />
+    <None Remove="ClientApp\App\car.ts" />
+    <None Remove="ClientApp\App\data.service.ts" />
+    <None Remove="ClientApp\App\not-found.component.ts" />
+    <None Remove="ClientApp\App\order-create.component.ts" />
+    <None Remove="ClientApp\App\order-detail.component.ts" />
+    <None Remove="ClientApp\App\order-edit.component.ts" />
+    <None Remove="ClientApp\App\order-form.component.html" />
+    <None Remove="ClientApp\App\order-form.component.ts" />
+    <None Remove="ClientApp\App\order.ts" />
+    <None Remove="ClientApp\App\user.ts" />
+    <None Remove="ClientApp\main.ts" />
+    <None Remove="ClientApp\polyfills.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\App\order-list.component.ts" />
   </ItemGroup>
 
 
@@ -20,13 +34,25 @@
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\AmaryllisTestProject.BLL\AmaryllisTestProject.BLL.csproj" />
-    <ProjectReference Include="..\AmaryllisTestProject.DAL\AmaryllisTestProject.DAL.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\App\app.component.ts" />
+    <TypeScriptCompile Include="ClientApp\App\app.module.ts" />
+    <TypeScriptCompile Include="ClientApp\App\order-form.component.html" />
+    <TypeScriptCompile Include="ClientApp\main.ts" />
+    <TypeScriptCompile Include="ClientApp\polyfills.ts" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿using AmaryllisTestProject.BLL.AutoMapper;
+﻿using AmaryllisTestProject.AutoMapper;
+using AmaryllisTestProject.BLL.Interfaces;
+using AmaryllisTestProject.BLL.Services;
 using AmaryllisTestProject.DAL.Concrate;
 using AmaryllisTestProject.DAL.EF;
 using AmaryllisTestProject.DAL.Interface;
@@ -10,10 +12,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.IO;
 
 namespace AmaryllisTestProject
 {
@@ -44,13 +48,19 @@ namespace AmaryllisTestProject
             });
 
             services.AddSingleton(config.CreateMapper());
-           // services.AddAutoMapper(typeof(Startup));
+
+
+         
 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICarService, CarService>();
 
             services.AddDbContext<EFContext>(options => options.UseSqlServer(connection));
 
@@ -64,6 +74,11 @@ namespace AmaryllisTestProject
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {
+                    HotModuleReplacement = true
+                });
             }
             else
             {
@@ -76,11 +91,19 @@ namespace AmaryllisTestProject
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvc(routes =>
+            app.UseMvc(
+            //    routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //}
+            );
+
+            app.Run(async (context) =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                context.Response.ContentType = "text/html";
+                await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
             });
         }
 

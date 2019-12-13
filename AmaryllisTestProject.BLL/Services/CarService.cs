@@ -39,19 +39,33 @@ namespace AmaryllisTestProject.BLL.Services
 
         public async Task<IEnumerable<CarDTO>> GetAllAsync()
         {
-            var listProducts = await _carRepository.GetAllAsync();
-            var listProductDTOs = _mapper.Map<IEnumerable<Car>, IEnumerable<CarDTO>>(listProducts);
-            return listProductDTOs;
+            var listCars = await _carRepository.GetAllAsync();
+            var listCarDTOs = _mapper.Map<IEnumerable<Car>, IEnumerable<CarDTO>>(listCars);
+            return listCarDTOs;
         }
 
-        public Task<CarDTO> GetByIdAsync(int id)
+        public async Task<CarDTO> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var car = await _carRepository.FindByIdAsync(id);
+            var carDTO = _mapper.Map<Car, CarDTO>(car);
+            return carDTO;
         }
 
-        public Task Update(CarDTO item)
+        public async Task Update(CarDTO item)
         {
-            throw new NotImplementedException();
+            var sourceCar = await _carRepository.FindByIdAsync(item.Id);
+
+            if (sourceCar != null)
+            {
+                sourceCar.Brand = item.Brand;
+                sourceCar.Class = item.Class;
+                sourceCar.Model = item.Model;
+                sourceCar.RegistrationNumber = item.RegistrationNumber;
+                sourceCar.YearOfIssue = item.YearOfIssue;
+
+                _carRepository.Update(sourceCar);
+            }
+            else throw new Exception("Такой записи нет");
         }
     }
 }

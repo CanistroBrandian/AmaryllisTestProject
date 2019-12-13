@@ -32,7 +32,7 @@ namespace AmaryllisTestProject.DAL.Repositories
             _uow.Commit();
         }
 
-        public virtual async Task<T> FindById(int id)
+        public virtual async Task<T> FindByIdAsync(int id)
         {
             return await _uow.Context.Set<T>().FindAsync(id);
         }

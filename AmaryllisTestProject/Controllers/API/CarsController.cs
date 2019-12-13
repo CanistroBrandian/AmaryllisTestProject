@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AmaryllisTestProject.DAL.EF;
 using AmaryllisTestProject.DAL.Entities;
+using AmaryllisTestProject.BLL.Interfaces;
+using AutoMapper;
+using AmaryllisTestProject.BLL.DTO;
+using AmaryllisTestProject.WEB.Models;
 
 namespace AmaryllisTestProject.WEB.Controllers.API
 {
@@ -15,17 +19,23 @@ namespace AmaryllisTestProject.WEB.Controllers.API
     public class CarsController : ControllerBase
     {
         private readonly EFContext _context;
+        private readonly ICarService _carService;
+        private readonly IMapper _mapper;
 
-        public CarsController(EFContext context)
+        public CarsController(EFContext context, ICarService carService, IMapper mapper)
         {
             _context = context;
+            _carService = carService;
+            _mapper = mapper;
         }
 
         // GET: api/Cars
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Car>>> GetCars()
+        public async Task<ActionResult<IEnumerable<CarViewModel>>> GetCars()
         {
-            return await _context.Cars.ToListAsync();
+            var listCarsDTO = await _carService.GetAllAsync();
+            var listCarsView = _mapper.Map<IEnumerable<CarDTO>, IEnumerable<CarViewModel>>(listCarsDTO);
+            return listCarsView.ToList();
         }
 
         // GET: api/Cars/5
