@@ -13,6 +13,6 @@ namespace AmaryllisTestProject.BLL.Interfaces
         Task Update(OrderDTO item);
         Task DeleteAsync(int id);
         Task CreateAsync(OrderDTO item);
-        Task<IEnumerable<OrderDTO>> FilterbyStartData(string item);
+        Task<IEnumerable<OrderDTO>> GetAllAsync(DateTime? startDate = null, DateTime? finishedDate = null, string userFirstName = null, string userLastName = null);
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AmaryllisTestProject.DAL.Repositories
@@ -37,9 +38,18 @@ namespace AmaryllisTestProject.DAL.Repositories
             return await _uow.Context.Set<T>().FindAsync(id);
         }
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null)
         {
-            return await _uow.Context.Set<T>().AsNoTracking().ToListAsync();
+            if (predicate != null)
+            {
+                return await _uow.Context.Set<T>()
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .ToListAsync();
+            }
+            return await _uow.Context.Set<T>()
+                    .AsNoTracking()
+                    .ToListAsync();
         }
 
         public virtual void Update(T item)
@@ -51,8 +61,8 @@ namespace AmaryllisTestProject.DAL.Repositories
 
         public async Task<IEnumerable<T>> FindList(Func<T, bool> predicate)
         {
-            return  _uow.Context.Set<T>().AsNoTracking().Where(predicate).AsEnumerable<T>();
+            return _uow.Context.Set<T>().AsNoTracking().Where(predicate).AsEnumerable<T>();
         }
-      
+
     }
 }

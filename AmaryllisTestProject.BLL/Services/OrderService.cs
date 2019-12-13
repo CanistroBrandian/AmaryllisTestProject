@@ -67,11 +67,14 @@ namespace AmaryllisTestProject.BLL.Services
             else throw new Exception("Такой записи нет");
         }
 
-        public async Task<IEnumerable<OrderDTO>> FilterbyStartData(string startContract)
+        public async Task<IEnumerable<OrderDTO>> GetAllAsync(DateTime? startDate = null, DateTime? finishedDate = null, string userFirstName = null, string userLastName = null)
         {
-            var list = await _orderRepository.GetAllAsync();
-            var result = list.Where(o => o.StartContractDateTime.ToString() == startContract);
-              var map= _mapper.Map<IEnumerable<Order>,IEnumerable<OrderDTO>>(result);
+            var list = await _orderRepository.GetAllAsync(p =>
+            (!startDate.HasValue || p.StartContractDateTime == startDate)
+            && (!finishedDate.HasValue || p.FinishedContractDateTime == finishedDate)
+            && (userFirstName == null || p.User.FirstName.Contains(userFirstName))
+            && (userLastName == null || p.User.LastName.Contains(userLastName)));
+            var map = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDTO>>(list);
             return map;
         }
     }

@@ -100,10 +100,10 @@ namespace AmaryllisTestProject.WEB.Controllers.API
         }
 
 
-/*        [HttpGet("filter/{startContractDateTime}")]
-        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetOrderByFilterStartContract(string startContractDateTime)
+        [HttpGet("filter")]
+        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetFilteredOrders(DateTime? startDate = null, DateTime? finishedDate = null, string userFirstName = null, string userLastName = null)
         {
-            var orderDTO = await _orderService.FilterbyStartData(startContractDateTime);
+            var orderDTO = await _orderService.GetAllAsync(startDate, finishedDate, userFirstName, userLastName);
             var orderView = _mapper.Map<IEnumerable<OrderDTO>, IEnumerable<OrderViewModel>>(orderDTO).ToList();
             if (orderView == null)
             {
@@ -111,7 +111,7 @@ namespace AmaryllisTestProject.WEB.Controllers.API
             }
 
             return orderView;
-        }*/
+        }
 
     }
 }

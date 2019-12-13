@@ -1,5 +1,6 @@
 ﻿using AmaryllisTestProject.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace AmaryllisTestProject.DAL.EF
 {
@@ -14,6 +15,11 @@ namespace AmaryllisTestProject.DAL.EF
         {
             Database.EnsureCreated();
 
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .ConfigureWarnings(w => w.Throw(RelationalEventId.QueryClientEvaluationWarning));
         }
     }
 }
