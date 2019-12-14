@@ -16,6 +16,14 @@ var OrderFormComponent = /** @class */ (function () {
         Input(),
         __metadata("design:type", OrderViewModel)
     ], OrderFormComponent.prototype, "order", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Array)
+    ], OrderFormComponent.prototype, "cars", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Array)
+    ], OrderFormComponent.prototype, "users", void 0);
     OrderFormComponent = __decorate([
         Component({
             selector: "order-form",

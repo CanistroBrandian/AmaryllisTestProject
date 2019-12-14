@@ -16,13 +16,19 @@ var OrderListComponent = /** @class */ (function () {
         this.fullOrdersList = [];
         this.searchTerm = null;
         this.sortOn = false;
+        this.cars = [];
+        this.users = [];
     }
     OrderListComponent.prototype.filter = function (newValue) {
+        var _this = this;
         if (newValue != "") {
             this.orders = this.fullOrdersList.filter(function (e) {
-                return e.car.brand.startsWith(newValue)
-                    || ((e.user.firstName && e.user.firstName.startsWith(newValue)))
-                    || (e.user.lastName && e.user.lastName.startsWith(newValue));
+                var car = _this.getCarById(e.carId);
+                console.log(car);
+                var user = _this.getUserById(e.userId);
+                return car.brand.startsWith(newValue)
+                    || ((user.firstName && user.firstName.startsWith(newValue)))
+                    || (user.lastName && user.lastName.startsWith(newValue));
             });
         }
         else
@@ -47,10 +53,22 @@ var OrderListComponent = /** @class */ (function () {
     OrderListComponent.prototype.load = function () {
         var _this = this;
         this.dataService.getOrderList().subscribe(function (data) { _this.orders = data; _this.fullOrdersList = data; });
+        this.dataService.getCarList().subscribe(function (data) {
+            _this.cars = data;
+        });
+        this.dataService.getUserList().subscribe(function (data) {
+            _this.users = data;
+        });
     };
     OrderListComponent.prototype.delete = function (id) {
         var _this = this;
         this.dataService.deleteOrder(id).subscribe(function (data) { return _this.load(); });
+    };
+    OrderListComponent.prototype.getCarById = function (carId) {
+        return this.cars.find(function (f) { return f.id == carId; });
+    };
+    OrderListComponent.prototype.getUserById = function (userId) {
+        return this.users.find(function (f) { return f.id == userId; });
     };
     OrderListComponent = __decorate([
         Component({

@@ -11,16 +11,21 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from './data.service';
 import { OrderViewModel } from './order';
-import { CarViewModel } from './car';
-import { UserViewModel } from "./user";
 var OrderCreateComponent = /** @class */ (function () {
     function OrderCreateComponent(dataService, router) {
         this.dataService = dataService;
         this.router = router;
-        this.order = new OrderViewModel(); // добавляемый объект
-        this.order.car = new CarViewModel();
-        this.order.user = new UserViewModel();
+        this.order = new OrderViewModel();
     }
+    OrderCreateComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.dataService.getCarList().subscribe(function (data) {
+            _this.cars = data;
+        });
+        this.dataService.getUserList().subscribe(function (data) {
+            _this.users = data;
+        });
+    };
     OrderCreateComponent.prototype.save = function () {
         var _this = this;
         console.log(this.order);

@@ -14,18 +14,25 @@ var OrderEditComponent = /** @class */ (function () {
     function OrderEditComponent(dataService, router, activeRoute) {
         this.dataService = dataService;
         this.router = router;
-        this.loaded = false;
+        this.loaded = false; // изменяемый объект
         this.id = Number.parseInt(activeRoute.snapshot.params["id"]);
     }
     OrderEditComponent.prototype.ngOnInit = function () {
         var _this = this;
-        if (this.id)
+        if (this.id) {
             this.dataService.getOrder(this.id)
                 .subscribe(function (data) {
                 _this.order = data;
                 if (_this.order != null)
                     _this.loaded = true;
             });
+        }
+        this.dataService.getCarList().subscribe(function (data) {
+            _this.cars = data;
+        });
+        this.dataService.getUserList().subscribe(function (data) {
+            _this.users = data;
+        });
     };
     OrderEditComponent.prototype.save = function () {
         var _this = this;
